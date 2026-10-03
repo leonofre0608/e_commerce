@@ -1,0 +1,215 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    color: #333;
+    line-height: 1.6;
+}
+
+.productos-encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.boton-agregar {
+    display: inline-block;
+    margin-left: auto;
+    padding: 10px 16px;
+    border-radius: 4px;
+    border: 1px solid #0056b3;
+    background-color: #007bff !important;
+    color: #fff !important;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.boton-agregar:hover {
+    background-color: #0056b3;
+}
+
+main {
+    padding: 50px;
+}
+
+/* Estilos básicos para el header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 2rem;
+}
+
+/* Estilo para el logo */
+.header > a,
+.header > a:visited,
+.header > a:hover,
+.header > a:focus,
+.header > a:active {
+    color: #fff;
+    text-decoration: none;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Estilos para los enlaces del menú */
+.nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 1.5rem;
+}
+
+/* Cambio de color al pasar el mouse */
+.nav a:hover {
+    color: #00bcd4;
+}
+
+/*
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+*/
+
+/* Cabecera y Navegación */
+/*
+.header {
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0077b6;
+    text-decoration: none;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-list a {
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+}
+
+.nav-list a:hover {
+    color: #0077b6;
+}
+*/
+
+/* Sección Hero */
+/*
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://unsplash.com') no-repeat center center/cover;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+}
+
+.btn {
+    display: inline-block;
+    background: #0077b6;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: #023e8a;
+}
+*/
+
+/* Sección de Destinos */
+/*
+.destinos {
+    padding: 60px 0;
+}
+
+.destinos h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2rem;
+    color: #0077b6;
+}
+
+.grid-destinos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card-content h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+*/
+
+/* Pie de página */
+/*
+.footer {
+    background: #222;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+*/

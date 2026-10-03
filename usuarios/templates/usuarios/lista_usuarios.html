@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} Lista de usuarios {% endblock %} 
+
+{% block content %}
+
+<h1>Lista de usuarios</h1>
+
+{% if usuarios %}
+
+<ul>
+    {% for usuario in usuarios %}
+        <li>Nombre: {{ usuario.first_name}} {{ usuario.last_name}}</li>
+        <li>user_name: {{usuario.username}} email: {{usuario.email}}</li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>No hay usuarios registrados</p>
+
+{% endif %}
+
+{% endblock %}

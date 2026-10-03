@@ -1,0 +1,50 @@
+RESPUESTAS Y JUSTIFICACIÓN TÉCNICA - E-COMMERCE DJANGO
+
+
+
+¿Cómo se lee el archivo que el usuario seleccionó en un <input type="file">?
+R./ Se obtiene directamente a través de la propiedad `.files` del input en el DOM, 
+usando por ejemplo `document.getElementById('imagen').files[0]`. Se le coloca la posición `[0]` 
+porque solo necesitamos extraer la primera imagen subida por el usuario.
+
+Si ya manda el formulario con JSON.stringify(dataForm), ¿por qué eso no funciona para mandar un archivo?
+R./ No sirve porque `JSON.stringify()` está diseñado únicamente para serializar datos de texto estructurado. 
+Las imágenes son archivos binarios y el formato JSON no los soporta directamente; por esa razón hay que recurrir a `FormData`.
+
+
+¿Qué objeto de JavaScript se usa en su lugar para armar un cuerpo de petición que incluya archivos?
+R./ Se utiliza la interfaz `FormData()`. En ella vamos agregando tanto los campos de texto como el archivo
+de la imagen mediante `append()`, y luego pasamos esa variable directamente en el `body` de la función `fetch()`.
+
+Cuando se manda ese objeto en el fetch, ¿hace falta seguir poniendo el header Content-Type: application/json?
+R./ No, no hay que ponerlo. Al enviarle un `FormData`, el mismo navegador se encarga de definir la cabecera correcta 
+(`multipart/form-data`) con sus separadores. Si le dejamos `application/json`, Django intentará leer la imagen 
+como texto y la petición fallará.
+
+
+
+Cuando la petición trae un archivo, ¿en qué atributo del request llega ese archivo?
+R./ Llega dentro del diccionario `request.FILES`. Mientras que los textos del formulario viajan en 
+`request.POST`, la imagen o cualquier archivo binario Django lo separa y lo entrega en `request.FILES`.
+
+Django necesita saber en qué carpeta del disco guardar los archivos, y con qué URL servirlos después. 
+¿Qué dos variables de settings.py controlan eso?
+R./ Son estas dos configuraciones:
+- `MEDIA_ROOT`: Es la ruta física del disco dentro de la carpeta del proyecto donde se almacenarán las fotos 
+(`BASE_DIR / 'media'`).
+- `MEDIA_URL`: Es el prefijo de la URL pública para consultar las imágenes desde el navegador o la API (`/media/`).
+
+Si guardan el archivo con las herramientas propias de Django (django.core.files.storage), 
+¿qué hace esa herramienta por ustedes que tendrían que programar a mano si lo hicieran con Python puro?
+R./ Django automatiza todo el proceso de I/O: abre el archivo, valida el nombre, genera un nombre único
+si ya existe uno igual para no sobrescribirlo y escribe los datos en disco dentro de `MEDIA_ROOT`. 
+Con Python puro tendríamos que crear funciones manuales usando `open()`, 
+manejar rutas de disco y controlar duplicados a mano.
+
+Una vez guardada la imagen, ¿qué dato exacto conviene guardar en la fila de la base de datos: la ruta 
+completa del archivo en el disco del servidor, o una ruta relativa?
+ ¿Por qué la respuesta importa si algún día cambian de servidor?
+R./ Conviene guardar la ruta relativa (por ejemplo `productos/foto.jpg`). 
+La razón es la portabilidad: las rutas absolutas dependen del disco duro local (como `C:\Users\...`), 
+y si el día de mañana se despliega el proyecto en un servidor Linux o en la nube, esa ruta absoluta ya no existirá 
+y las imágenes dejarán de cargar. Con la ruta relativa el proyecto sigue funcionando sin importar dónde esté alojado.

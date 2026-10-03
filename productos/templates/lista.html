@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Productos - Mi E-commerce{% endblock %}
+
+{% block content %}
+    <div class="productos-encabezado">
+        <h1>Catálogo de productos</h1>
+        <a class="boton-agregar" href="{% url 'productos:crea_producto' %}">Agregar nuevo producto + </a>
+    </div>
+    <hr>
+
+    <div id="productos"></div>
+
+    <script>
+        cargarProductos();
+
+        async function cargarProductos() {
+            try {
+                const response = await fetch('/productos/api/productos/');
+
+                if (!response.ok) {
+                    throw new Error(`Error al cargar los productos (${response.status})`);
+                }
+
+                const productos = await response.json();
+                const contenedor = document.getElementById('productos');
+                contenedor.innerHTML = ''; // Limpia el contenedor antes de renderizar
+                
+                const formatoPrecio = new Intl.NumberFormat('es-CO', {
+                    maximumFractionDigits: 0
+                });
+
+                productos.forEach(producto => {
+                    const div = document.createElement('div');
+                    const precio = formatoPrecio.format(Number(producto.precio));
+
+                    div.innerHTML = `
+                        <h2>${producto.id}. ${producto.nombre}</h2>
+                        <p>Precio: $${precio}</p>
+                        <p>${producto.descripcion}</p>
+                        <a href="${producto.imagen_url}" target="_blank">
+                            <img src="${producto.imagen_url}" width="150" height="150" title="${producto.nombre}">
+                        </a>
+                        <br><br>
+                        <!-- BOTÓN DE ELIMINAR AGREGADO AQUÍ -->
+                        <button onclick="eliminarProducto(${producto.id})" style="background-color: #dc3545; color: white; border: none; padding: 8px 12px; cursor: pointer; border-radius: 4px;">
+                            Eliminar
+                        </button>
+                        <hr>
+                    `;
+
+                    contenedor.appendChild(div);
+                }); 
+            } catch (error) {
+                document.getElementById('productos').textContent = error.message;
+            }
+        }
+
+        // FUNCIÓN PARA ELIMINAR EL PRODUCTO
+        async function eliminarProducto(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+                try {
+                    const response = await fetch(`/productos/api/eliminar/${id}/`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        alert('Producto eliminado con éxito');
+                        cargarProductos(); // Vuelve a consultar la API para actualizar la vista
+                    } else {
+                        alert('Error al intentar eliminar el producto');
+                    }
+                } catch (error) {
+                    alert('Ocurrió un error en la conexión');
+                }
+            }
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Crear producto - Mi E-commerce{% endblock %}
+
+{% block content %}
+    <a href="{% url 'productos:lista_productos' %}">Volver</a>
+    <h1>Agregar producto</h1>
+
+    <form id="formulario">
+        
+        <label>Nombre:</label>
+        <input type="text" id="nombre">
+
+        <br><br>
+
+        <label>Precio:</label>
+        <input type="number" id="precio">
+
+        <br><br>
+
+        <label>Descripción:</label>
+        <textarea id="descripcion"></textarea>
+
+        <br><br>
+
+        <label>Imagen:</label>
+        <input type="file" id="imagen">
+
+        <br><br>
+
+        <button type="submit">Guardar</button>
+    </form>
+
+    <p id="mensaje"></p>
+
+    <script>
+        const formulario = document.getElementById('formulario');
+
+        formulario.addEventListener('submit', async function(event) {
+
+            event.preventDefault();
+
+            const datos = new FormData();
+
+            datos.append(
+                'nombre',
+                document.getElementById('nombre').value
+            );
+
+            datos.append(
+                'precio',
+                document.getElementById('precio').value
+            );
+
+            datos.append(
+                'descripcion',
+                document.getElementById('descripcion').value
+            );
+
+            datos.append(
+                'imagen',
+                document.getElementById('imagen').files[0]
+            );
+
+            try {
+                const response = await fetch('/productos/api/productos/crear/', {
+                    method: 'POST',
+                    body: datos
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error al guardar el producto (${response.status})`);
+                }
+
+                const data = await response.json();
+                document.getElementById('mensaje').textContent =
+                    data.mensaje;
+
+                formulario.reset();
+            } catch (error) {
+                document.getElementById('mensaje').textContent = error.message;
+            }
+        });
+    </script>
+{% endblock %}

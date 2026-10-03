@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>{% block title %}E-commerce{% endblock %}</title>
+</head>
+<body>
+    <header class="header">
+        <a href="{% url 'index' %}"><div class="logo">Mi E-commerce</div></a>
+        <nav class="nav">
+            <a href="{% url 'index' %}">Inicio</a>
+            <a href="{% url 'productos:lista_productos' %}">Productos</a>
+            <a href="{% url 'pedidos:inicio' %}">Pedidos</a>
+            <a href="{% url 'inventario:inicio' %}">Inventario</a>
+            <a href="{% url 'matriculas:inicio' %}">Matriculas</a>
+            <a href="{% url 'usuarios:lista_usuarios' %}">Usuarios</a>
+            <a href="{% url 'admin:index' %}">Admin</a>
+        </nav>
+    </header>
+
+    <!-- Aquí se cargará el contenido de cada página -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+</html>
